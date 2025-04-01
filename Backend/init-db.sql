@@ -36,19 +36,10 @@ CREATE TABLE items
     FOREIGN KEY (boxId) REFERENCES boxes (id)
 );
 
-INSERT INTO items
-(name, boxId)
-VALUES ('Schere', 1),
-       ('Stifte', 1),
-       ('Fußball', 2),
-       ('Orangen', 2);
-
-INSERT INTO boxes
-(name, shelfId)
-VALUES ('E1', 1),
-       ('E2', 1),
-       ('E3', 2),
-       ('R4', 2);
+INSERT INTO rooms
+    (name)
+VALUES ('Werkraum 1'),
+       ('Werkraum 2');
 
 INSERT INTO shelfs
 (name, roomId)
@@ -57,7 +48,16 @@ VALUES ('Links', 1),
        ('Fensterbank', 2),
        ('Rückwand', 2);
 
-INSERT INTO rooms
-    (name)
-VALUES ('Werkraum 1'),
-       ('Werkraum 2');
+INSERT INTO boxes
+(name, shelfId)
+VALUES ('E1', 1),
+       ('E2', 1),
+       ('E3', 2),
+       ('R4', 2);
+
+INSERT INTO items
+(name, boxId)
+VALUES ('Schere', 1),
+       ('Stifte', 1),
+       ('Fußball', 2),
+       ('Orangen', 3);
