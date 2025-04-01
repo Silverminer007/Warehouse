@@ -125,3 +125,13 @@ func loadRoom(roomId int64) (Room, error) {
 	}
 	return room, nil
 }
+
+func createItem(item Item) error {
+	_, err := db.Exec("INSERT INTO items (name, boxId) VALUES ('?', '?')", item.Name, item.Box.id)
+	return err
+}
+
+func updateItem(item Item) error {
+	_, err := db.Exec("UPDATE items SET name='?', boxId='?' WHERE id='?'", item.Name, item.Box.id, item.id)
+	return err
+}
