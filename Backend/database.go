@@ -59,6 +59,31 @@ func loadItemsByBox(boxId int64) ([]Item, error) {
 	return items, nil
 }
 
+func loadItems() ([]Item, error) {
+	var items []Item
+
+	rows, err := db.Query("SELECT * FROM items")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var item Item
+		var boxId int64
+		if err := rows.Scan(&item.id, &item.Name, &boxId); err != nil {
+			return nil, err
+		}
+		item.Box, _ = loadBox(boxId)
+		items = append(items, item)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("all items: %v", err)
+	}
+
+	return items, nil
+}
+
 func loadItem(itemId int64) (Item, error) {
 	var item Item
 	row := db.QueryRow("SELECT * FROM items WHERE id=?", itemId)
