@@ -3,19 +3,19 @@ package main
 type Item struct {
 	id   int64
 	Name string
-	Box  Box
+	Box  int64
 }
 
 type Box struct {
 	id    int64
 	Name  string
-	Shelf Shelf
+	Shelf int64
 }
 
 type Shelf struct {
 	id   int64
 	Name string
-	Room Room
+	Room int64
 }
 
 type Room struct {
