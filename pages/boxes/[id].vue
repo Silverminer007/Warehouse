@@ -10,6 +10,7 @@ const items : Item[] = error ? [] : (itemData.data.value || []);
 </script>
 
 <template>
+  <p class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">{{items[0].expandedBox?.name}}</p>
   <ItemList :items="items"/>
 </template>
 
