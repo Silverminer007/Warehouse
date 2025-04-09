@@ -1,5 +1,4 @@
 <script setup lang="ts">
-console.log("Default page render")
 </script>
 
 <template>
