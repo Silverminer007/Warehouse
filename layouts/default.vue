@@ -4,7 +4,9 @@
 <template>
   <div>
     <div class="flex flex-row items-center gap-2 bg-slate-800 p-4">
-      <img src="/logo.png" alt="icon" width="40"/>
+      <a href="/">
+        <img src="/logo.png" alt="icon" width="40"/>
+      </a>
       <h1 class="text-white text-bold rounded-b-sm text-4xl">KjG Warehouse</h1>
     </div>
     <slot/>

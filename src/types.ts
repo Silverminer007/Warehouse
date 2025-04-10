@@ -3,7 +3,7 @@ export type RawItem = {
     date_created: string,
     date_updated: string,
     name: string,
-    images: string[] | undefined,
+    item_image: string,
     amount: number,
     box: number,
     description: string | undefined,
@@ -60,7 +60,8 @@ export type Room = {
     date_created: string,
     date_updated: string,
     name: string,
-    room_image: string
+    room_image: string,
+    description: string,
 }
 export type DataArray = {
     data: any[]
