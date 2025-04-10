@@ -64,7 +64,7 @@ export async function fetchRooms(): Promise<Room[] | undefined> {
 }
 
 export async function fetchShelfsByRoom(roomId: string | string[]): Promise<Shelf[]> {
-    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf?filter[room]=' + roomId);
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf?sort=name&filter[room]=' + roomId);
     if (!rawData.ok) {
         console.error("Failed to fetch shelfs for box " + roomId);
     }
@@ -82,7 +82,7 @@ export async function fetchShelfsByRoom(roomId: string | string[]): Promise<Shel
 }
 
 export async function fetchBoxesByShelf(shelfId: string | string[]): Promise<Box[] | undefined> {
-    let rawData = await fetch('https://items.kjg-st-barbara.de/items/Box?filter[shelf]=' + shelfId);
+    let rawData = await fetch('https://items.kjg-st-barbara.de/items/Box?sort=name&filter[shelf]=' + shelfId);
     if (!rawData.ok) {
         console.error("Failed to fetch boxes");
         return;
@@ -120,7 +120,7 @@ export async function fetchBoxesByShelf(shelfId: string | string[]): Promise<Box
 }
 
 export async function fetchItemsByBox(boxId: string | string[]): Promise<Item[]> {
-    const rawData = await fetch('https://items.kjg-st-barbara.de/items/item?filter[box]=' + boxId);
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/item?sort=name&filter[box]=' + boxId);
     if (!rawData.ok) {
         console.error("Failed to fetch items for Box " + boxId);
     }
