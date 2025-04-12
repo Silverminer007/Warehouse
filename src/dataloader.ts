@@ -18,31 +18,51 @@ export async function fetchRoom(roomId: string | string[]): Promise<Room | undef
     return (await rawData.json() as Data).data as Room;
 }
 
-export async function fetchShelf(shelfId: string | string[]): Promise<Shelf | undefined> {
+export async function fetchShelf(shelfId: string | string[], expand?: boolean): Promise<Shelf | undefined> {
     const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf/' + shelfId);
     if (!rawData.ok) {
         console.error("Failed to fetch shelf: " + shelfId);
         return;
     }
-    return (await rawData.json() as Data).data as Shelf;
+    const shelf = (await rawData.json() as Data).data as Shelf;
+    if(expand && shelf) {
+        const room = await fetchRoom(shelf.room.toString());
+        if(room) {
+            shelf.expandedRoom = room;
+        }
+    }
+    return shelf;
 }
 
-export async function fetchBox(boxId: string | string[]): Promise<Box | undefined> {
+export async function fetchBox(boxId: string | string[], expand?: boolean): Promise<Box | undefined> {
     const rawData = await fetch('https://items.kjg-st-barbara.de/items/Box/' + boxId);
     if (!rawData.ok) {
         console.error("Failed to fetch box: " + boxId);
         return;
     }
-    return (await rawData.json() as Data).data as Box;
+    const box = (await rawData.json() as Data).data as Box
+    if(expand && box) {
+        const shelf = await fetchShelf(box.shelf.toString(), true);
+        if(shelf) {
+            box.expandedShelf = shelf;
+        }
+    }
+    return box;
 }
 
-export async function fetchItem(itemId: string | string[]): Promise<Item | undefined> {
+export async function fetchItem(itemId: string | string[], expand?: boolean): Promise<Item | undefined> {
     const rawData = await fetch('https://items.kjg-st-barbara.de/items/Item/' + itemId);
     if (!rawData.ok) {
         console.error("Failed to fetch item: " + itemId);
         return;
     }
-    return (await rawData.json() as Data).data as Item;
+    const item = (await rawData.json() as Data).data as Item;
+    if(expand && item) {
+        const box = await fetchBox(item.box.toString());
+        if(box) {
+            item.expandedBox = box;
+        }
+    }
 }
 
 export async function fetchCategories(): Promise<Category[] | undefined> {
@@ -127,7 +147,7 @@ export async function fetchItemsByBox(boxId: string | string[]): Promise<Item[]>
     const data = await rawData.json() as DataArray;
     const items: Item[] = data.data as Item[];
 
-    const box = await fetchBox(boxId);
+    const box = await fetchBox(boxId, false);
 
     const categoryStore = new Map<number, Category>();
     (await fetchCategories())?.forEach((category) => {
