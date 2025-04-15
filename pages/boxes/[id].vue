@@ -15,7 +15,7 @@ const items: Item[] = error ? [] : (itemData.data.value || []);
 
 const shelfId: number | undefined = box?.shelf;
 
-const shelfHref = shelfId ? "/shelfs/" + id : "/";
+const shelfHref = shelfId ? "/shelfs/" + shelfId : "/";
 const roomHref = "/rooms/" + box?.expandedShelf.room;
 
 const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?height=400";
