@@ -181,3 +181,119 @@ export async function fetchItemsByBox(boxId: string | string[]): Promise<Item[]>
     }
     return items;
 }
+
+export async function fetchShelfs(): Promise<Shelf[]> {
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf?sort=name');
+    if (!rawData.ok) {
+        console.error("Failed to fetch shelfs");
+    }
+    const data = await rawData.json() as DataArray;
+    const shelfs: Shelf[] = data.data as Shelf[];
+
+    const rooms = await fetchRooms() || [];
+    const roomsMap = new Map<number, Room>();
+    rooms.forEach((room) => {
+        roomsMap.set(room.id, room);
+    })
+
+    for (const shelf of shelfs) {
+        const room = roomsMap.get(shelf.room);
+        if(room) {
+            shelf.expandedRoom = room;
+        }
+    }
+    return shelfs;
+}
+
+export async function fetchBoxes(): Promise<Box[] | undefined> {
+    let rawData = await fetch('https://items.kjg-st-barbara.de/items/Box?sort=name');
+    if (!rawData.ok) {
+        console.error("Failed to fetch boxes");
+        return;
+    }
+    const boxes = (await rawData.json() as DataArray).data as Box[];
+
+    const shelfs = await fetchShelfs() || [];
+    const shelfsMap = new Map<number, Shelf>();
+    shelfs.forEach((shelf) => {
+        shelfsMap.set(shelf.id, shelf);
+    })
+
+    const categoryStore = new Map<number, Category>();
+    (await fetchCategories())?.forEach((category) => {
+        categoryStore.set(category.id, category);
+    })
+
+    if (categoryStore.size <= 0) {
+        return boxes;
+    }
+
+    for (const box of boxes) {
+        const shelf = shelfsMap.get(box.shelf);
+        if(shelf) {
+            box.expandedShelf = shelf;
+        }
+        if (box.categories) {
+            box.expandedCategories = [];
+            for (const category of box.categories) {
+                const cat = categoryStore.get(category);
+                if (cat) {
+                    box.expandedCategories.push(cat);
+                }
+            }
+        } else {
+            box.expandedCategories = [];
+        }
+    }
+    return boxes;
+}
+
+export async function fetchItemsBySearch(search: string | string[]): Promise<Item[]> {
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/item?sort=name&search=' + search);
+    if (!rawData.ok) {
+        console.error("Failed to fetch items by search");
+    }
+    const data = await rawData.json() as DataArray;
+    const items: Item[] = data.data as Item[];
+
+    const boxes = await fetchBoxes() || [];
+    const boxesMap = new Map<number, Box>();
+    boxes.forEach((box) => {
+        boxesMap.set(box.id, box);
+    })
+
+    const categoryStore = new Map<number, Category>();
+    (await fetchCategories())?.forEach((category) => {
+        categoryStore.set(category.id, category);
+    })
+
+    if (categoryStore.size <= 0) {
+        return items;
+    }
+
+    for (const item of items) {
+        const box = boxesMap.get(item.box);
+        if (box) {
+            item.expandedBox = box;
+        }
+        if (item.category) {
+            item.expandedCategories = [];
+            const cat = categoryStore.get(item.category);
+            if (cat) {
+                item.expandedCategories.push(cat);
+            }
+        } else {
+            item.expandedCategories = [];
+            if (!box) {
+                continue;
+            }
+            for (const catId of box.categories) {
+                const cat = categoryStore.get(catId);
+                if (cat) {
+                    item.expandedCategories.push(cat);
+                }
+            }
+        }
+    }
+    return items;
+}

@@ -11,7 +11,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + 
 <template>
   <div class="flex-row flex items-center gap-2 m-2 px-4 py-2 rounded-full bg-slate-600">
     <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-1">
       <div class="flex flex-row items-center gap-2">
         <p class="text-slate-400">{{ item.amount }}x</p>
         <p class="text-white">{{ item.name }}</p>
