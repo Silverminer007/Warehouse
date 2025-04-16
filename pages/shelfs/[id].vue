@@ -21,22 +21,22 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
 </script>
 
 <template>
-  <div class="breadcrumbs text-white m-2">
+  <div class="breadcrumbs text-base-content m-2">
     <ul>
       <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
       <li><a :href="roomHref">{{ shelf?.expandedRoom?.name }}</a></li>
       <li>{{ shelf?.name }}</li>
     </ul>
   </div>
-  <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold" v-if="shelf && shelf.description">
+  <p class="m-2 p-4 text-base-content rounded-xl bg-base-200 w-fit text-bold" v-if="shelf && shelf.description">
     {{ shelf?.description }}
   </p>
   <img class="px-2" v-if="shelf && shelf.shelf_image" :src="imageSrc" alt="picture of the shelf"/>
   <BoxList :boxes="boxes" :roomId="roomId"/>
   <div v-if="boxes.length == 0">
-    <p class="text-white m-2 p-4 text-center text-xl">
+    <p class="text-base-content m-2 p-4 text-center text-xl">
       Keine Kisten in diesem Regal. <a :href="roomsOverviewHref"
-                                       class="text-slate-400">{{ roomId ? "Zurück zum Raum" : "Zurück zur Startseite" }}</a>
+                                       class="link">{{ roomId ? "Zurück zum Raum" : "Zurück zur Startseite" }}</a>
     </p>
   </div>
 </template>

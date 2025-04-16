@@ -15,7 +15,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
   <li class="list-row">
     <a :href="shelfHref">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the shelf"/>
-      <p class="text-white text-xl">{{ shelf.name }}</p>
+      <p class="text-base-content text-xl">{{ shelf.name }}</p>
     </a>
   </li>
 </template>

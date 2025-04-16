@@ -16,7 +16,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
   <li class="list-row">
     <a :href="boxHref">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the box"/>
-      <p class="text-white text-xl">{{ box.name }}</p>
+      <p class="text-base-content text-xl">{{ box.name }}</p>
     </a>
   </li>
 </template>

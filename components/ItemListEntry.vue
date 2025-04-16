@@ -13,8 +13,8 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + 
     <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
     <div class="flex flex-col gap-1">
       <div class="flex flex-row items-center gap-2">
-        <p class="text-slate-400">{{ item.amount }}x</p>
-        <p class="text-white text-xl">{{ item.name }}</p>
+        <p class="text-base-content/30">{{ item.amount }}x</p>
+        <p class="text-base-content text-xl">{{ item.name }}</p>
         <p class="badge badge-neutral" v-for="cat in item.expandedCategories"
            :key="cat.id">{{ cat.name }}</p>
       </div>

@@ -12,7 +12,7 @@ const rooms: Room[] = error ? [] : (roomData.data.value || []);
 </script>
 
 <template>
-  <div class="breadcrumbs text-white m-2">
+  <div class="breadcrumbs text-base-content m-2">
     <ul>
       <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
     </ul>

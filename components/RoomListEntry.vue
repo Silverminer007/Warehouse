@@ -13,7 +13,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
   <li class="list-row">
     <a :href="roomHref">
       <img v-if="room && room.room_image" :src="imageSrc" alt="photo of the room"/>
-      <p class="text-white text-xl">{{ room.name }}</p>
+      <p class="text-base-content text-xl">{{ room.name }}</p>
     </a>
   </li>
 </template>
