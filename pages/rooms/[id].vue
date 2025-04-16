@@ -17,15 +17,11 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
 </script>
 
 <template>
-  <div class="flex flex-row items-center gap">
-    <a href="/" class="m-2 p-4 rounded-xl bg-slate-700 text-bold">
-      <HomeIcon class="h-6 w-6 text-white"/>
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"> > </p>
-    <p v-if="room"
-       class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">
-      {{ room?.name }}
-    </p>
+  <div class="breadcrumbs text-white m-2">
+    <ul>
+      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+      <li>{{ room?.name }}</li>
+    </ul>
   </div>
   <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold" v-if="room && room.description">
     {{ room?.description }}

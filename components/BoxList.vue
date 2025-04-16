@@ -8,7 +8,9 @@ const {boxes} = defineProps<{
 </script>
 
 <template>
-  <BoxListEntry v-for="box in boxes" :key="box.id" :box="box"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <BoxListEntry v-for="box in boxes" :key="box.id" :box="box"/>
+  </ul>
 </template>
 
 <style scoped>

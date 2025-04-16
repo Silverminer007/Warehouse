@@ -8,7 +8,9 @@ const {shelfs} = defineProps<{
 </script>
 
 <template>
-  <ShelfListEntry v-for="shelf in shelfs" :key="shelf.id" :shelf="shelf"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <ShelfListEntry v-for="shelf in shelfs" :key="shelf.id" :shelf="shelf"/>
+  </ul>
 </template>
 
 <style scoped>

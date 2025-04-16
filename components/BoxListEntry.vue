@@ -13,14 +13,13 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 </script>
 
 <template>
-  <a :href="boxHref">
-    <div class="flex-row flex items-center gap-2 m-2 px-4 py-2 rounded-full bg-slate-600">
+  <li class="list-row">
+    <a :href="boxHref">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the box"/>
-      <p class="text-white">{{ box.name }}</p>
-    </div>
-  </a>
+      <p class="text-white text-xl">{{ box.name }}</p>
+    </a>
+  </li>
 </template>
 
 <style scoped>
-@import "tailwindcss/tailwind.css";
 </style>

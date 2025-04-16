@@ -12,14 +12,13 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
 </script>
 
 <template>
-  <a :href="shelfHref">
-    <div class="flex-row flex items-center gap-2 m-2 px-4 py-2 rounded-full bg-slate-600">
+  <li class="list-row">
+    <a :href="shelfHref">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the shelf"/>
-      <p class="text-white">{{ shelf.name }}</p>
-    </div>
-  </a>
+      <p class="text-white text-xl">{{ shelf.name }}</p>
+    </a>
+  </li>
 </template>
 
 <style scoped>
-@import "tailwindcss/tailwind.css";
 </style>

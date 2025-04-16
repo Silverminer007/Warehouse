@@ -10,6 +10,7 @@ const error = !!itemData.error.value;
 const items: Item[] = error ? [] : (itemData.data.value || []);
 
 const searchText = ref(search);
+
 function doSearch() {
   window.location.href = "/search?search=" + searchText.value;
 }
@@ -17,12 +18,15 @@ function doSearch() {
 
 <template>
   <div class="w-full p-2 flex-col flex sm:flex-row">
-    <input type="search" placeholder="Search..." v-model="searchText"
-           class="h-10 rounded-xl m-2 p-2 text-xl text-white border-2 border-slate-500 bg-slate-600 sm:flex-grow"
-           @keydown.enter="doSearch()"/>
-    <a :href="`/search?search=${searchText}`" class="text-white bg-slate-700 rounded-full py-2 px-4 m-2 text-center text-xl">
+    <label class="floating-label m-2 flex-grow flex flex-row sm:hidden">
+      <span>Suche</span>
+      <input type="search" placeholder="Search..." v-model="searchText"
+             class="input flex-grow"
+             @keydown.enter="doSearch()"/>
+    </label>
+    <button @click="doSearch" class="btn btn-primary m-2 sm:hidden">
       Suchen
-    </a>
+    </button>
   </div>
   <p class="text-slate-400 px-4 text-xl">
     {{ items.length }} Gegenstände in deiner Suche

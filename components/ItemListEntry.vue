@@ -9,24 +9,31 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + 
 </script>
 
 <template>
-  <div class="flex-row flex items-center gap-2 m-2 px-4 py-2 rounded-full bg-slate-600">
+  <li class="list-row">
     <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
     <div class="flex flex-col gap-1">
       <div class="flex flex-row items-center gap-2">
         <p class="text-slate-400">{{ item.amount }}x</p>
-        <p class="text-white">{{ item.name }}</p>
-        <p class="bg-slate-700 text-white rounded px-1 w-content text-sm" v-for="cat in item.expandedCategories"
+        <p class="text-white text-xl">{{ item.name }}</p>
+        <p class="badge badge-neutral" v-for="cat in item.expandedCategories"
            :key="cat.id">{{ cat.name }}</p>
       </div>
       <div v-if="item.expandedBox && item.expandedBox.expandedShelf && item.expandedBox.expandedShelf.expandedRoom">
-        <p class="bg-slate-700 text-white rounded px-1 w-content text-sm">
-          {{ item.expandedBox?.expandedShelf?.expandedRoom?.name }} > {{ item.expandedBox?.expandedShelf?.name }} > {{ item.expandedBox?.name }}
-        </p>
+        <div class="badge badge-neutral">
+          {{ item.expandedBox?.expandedShelf?.expandedRoom?.name }}
+        </div>
+        >
+        <div class="badge badge-neutral">
+          {{ item.expandedBox?.expandedShelf?.name }}
+        </div>
+        >
+        <div class="badge badge-neutral">
+          {{ item.expandedBox?.name }}
+        </div>
       </div>
     </div>
-  </div>
+  </li>
 </template>
 
 <style scoped>
-@import "tailwindcss/tailwind.css";
 </style>

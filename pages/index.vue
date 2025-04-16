@@ -12,10 +12,10 @@ const rooms: Room[] = error ? [] : (roomData.data.value || []);
 </script>
 
 <template>
-  <div class="flex flex-row items-center gap">
-    <a href="/" class="m-2 p-4 rounded-xl bg-slate-700 text-bold">
-      <HomeIcon class="h-6 w-6 text-white"/>
-    </a>
+  <div class="breadcrumbs text-white m-2">
+    <ul>
+      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+    </ul>
   </div>
   <RoomList :rooms="rooms"/>
 </template>

@@ -8,7 +8,9 @@ const {rooms} = defineProps<{
 </script>
 
 <template>
-  <RoomListEntry v-for="room in rooms" :key="room.id" :room="room"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <RoomListEntry v-for="room in rooms" :key="room.id" :room="room"/>
+  </ul>
 </template>
 
 <style scoped>

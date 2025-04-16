@@ -22,25 +22,13 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 </script>
 
 <template>
-  <div class="flex flex-row items-center gap">
-    <a href="/" class="m-2 p-4 rounded-xl bg-slate-700 text-bold">
-      <HomeIcon class="h-6 w-6 text-white" />
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"
-       v-if="box?.expandedShelf?.expandedRoom"> > </p>
-    <a :href="roomHref" v-if="box?.expandedShelf?.expandedRoom"
-       class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">
-      {{ box?.expandedShelf?.expandedRoom?.name }}
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"
-       v-if="box?.expandedShelf?.expandedRoom"> > </p>
-    <a :href="shelfHref" v-if="box?.expandedShelf?.expandedRoom"
-       class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">
-      {{ box?.expandedShelf?.name }}
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"
-       v-if="box?.expandedShelf?.expandedRoom"> > </p>
-    <p class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">{{ box?.name }}</p>
+  <div class="breadcrumbs text-white m-2">
+    <ul>
+      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+      <li><a :href="roomHref">{{ box?.expandedShelf?.expandedRoom?.name }}</a></li>
+      <li><a :href="shelfHref">{{ box?.expandedShelf?.name }}</a></li>
+      <li>{{ box?.name }}</li>
+    </ul>
   </div>
   <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold" v-if="box && box.description">
     {{ box?.description }}

@@ -21,22 +21,12 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
 </script>
 
 <template>
-  <div class="flex flex-row items-center gap">
-    <a href="/" class="m-2 p-4 rounded-xl bg-slate-700 text-bold">
-      <HomeIcon class="h-6 w-6 text-white" />
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"
-       v-if="shelf?.expandedRoom"> > </p>
-    <a :href="roomHref" v-if="shelf?.expandedRoom"
-       class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">
-      {{ shelf?.expandedRoom?.name }}
-    </a>
-    <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold text-xl"
-       v-if="shelf?.expandedRoom"> > </p>
-    <p v-if="shelf"
-       class="m-2 p-4 text-white rounded-xl bg-slate-700 w-fit text-bold text-xl">
-      {{ shelf.name }}
-    </p>
+  <div class="breadcrumbs text-white m-2">
+    <ul>
+      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+      <li><a :href="roomHref">{{ shelf?.expandedRoom?.name }}</a></li>
+      <li>{{ shelf?.name }}</li>
+    </ul>
   </div>
   <p class="m-2 p-4 text-slate-400 rounded-xl bg-slate-700 w-fit text-bold" v-if="shelf && shelf.description">
     {{ shelf?.description }}
