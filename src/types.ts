@@ -30,14 +30,12 @@ export type RawBox = {
     date_updated: string,
     size: string,
     shelf: number,
-    categories: number[],
     description: string,
     color: string,
     image: string;
 }
 
 export type Box = RawBox & {
-    expandedCategories: Category[];
     expandedShelf: Shelf;
 }
 

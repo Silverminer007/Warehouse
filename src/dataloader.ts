@@ -111,29 +111,9 @@ export async function fetchBoxesByShelf(shelfId: string | string[]): Promise<Box
 
     const shelf = await fetchShelf(shelfId);
 
-    const categoryStore = new Map<number, Category>();
-    (await fetchCategories())?.forEach((category) => {
-        categoryStore.set(category.id, category);
-    })
-
-    if (categoryStore.size <= 0) {
-        return boxes;
-    }
-
     for (const box of boxes) {
         if(shelf) {
             box.expandedShelf = shelf;
-        }
-        if (box.categories) {
-            box.expandedCategories = [];
-            for (const category of box.categories) {
-                const cat = categoryStore.get(category);
-                if (cat) {
-                    box.expandedCategories.push(cat);
-                }
-            }
-        } else {
-            box.expandedCategories = [];
         }
     }
     return boxes;
@@ -160,22 +140,11 @@ export async function fetchItemsByBox(boxId: string | string[]): Promise<Item[]>
 
     for (const item of items) {
         item.expandedBox = box;
+        item.expandedCategories = [];
         if (item.category) {
-            item.expandedCategories = [];
             const cat = categoryStore.get(item.category);
             if (cat) {
                 item.expandedCategories.push(cat);
-            }
-        } else {
-            item.expandedCategories = [];
-            if (!box) {
-                continue;
-            }
-            for (const catId of box.categories) {
-                const cat = categoryStore.get(catId);
-                if (cat) {
-                    item.expandedCategories.push(cat);
-                }
             }
         }
     }
@@ -233,17 +202,6 @@ export async function fetchBoxes(): Promise<Box[] | undefined> {
         if(shelf) {
             box.expandedShelf = shelf;
         }
-        if (box.categories) {
-            box.expandedCategories = [];
-            for (const category of box.categories) {
-                const cat = categoryStore.get(category);
-                if (cat) {
-                    box.expandedCategories.push(cat);
-                }
-            }
-        } else {
-            box.expandedCategories = [];
-        }
     }
     return boxes;
 }
@@ -276,22 +234,11 @@ export async function fetchItemsBySearch(search: string | string[]): Promise<Ite
         if (box) {
             item.expandedBox = box;
         }
+        item.expandedCategories = [];
         if (item.category) {
-            item.expandedCategories = [];
             const cat = categoryStore.get(item.category);
             if (cat) {
                 item.expandedCategories.push(cat);
-            }
-        } else {
-            item.expandedCategories = [];
-            if (!box) {
-                continue;
-            }
-            for (const catId of box.categories) {
-                const cat = categoryStore.get(catId);
-                if (cat) {
-                    item.expandedCategories.push(cat);
-                }
             }
         }
     }
