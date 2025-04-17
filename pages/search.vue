@@ -28,7 +28,7 @@ function doSearch() {
       Suchen
     </button>
   </div>
-  <p class="text-base-content/30 px-4 text-xl">
+  <p class="text-base-content/80 px-4 text-xl">
     {{ items.length }} Gegenstände in deiner Suche
   </p>
   <ItemList :items="items"/>
