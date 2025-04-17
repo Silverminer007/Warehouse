@@ -30,7 +30,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
       <li>{{ box?.name }}</li>
     </ul>
   </div>
-  <p class="m-2 p-4 text-base-content rounded-xl bg-base-200 w-fit text-bold" v-if="box && box.description">
+  <p class="m-2 p-4 text-info rounded-xl bg-base-200 border border-dashed border-info w-fit text-bold" v-if="box && box.description">
     {{ box?.description }}
   </p>
   <img class="px-2" v-if="box && box.image" :src="imageSrc" alt="picture of the box"/>

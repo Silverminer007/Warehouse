@@ -21,14 +21,14 @@ function navigateToSearch() {
     <label class="floating-label m-2 sm:block hidden">
       <span>Suche</span>
       <input type="search" placeholder="Search..." v-model="searchText"
-             class="input"
+             class="input input-secondary"
              @keydown.enter="doSearch()"/>
     </label>
-    <button @click="doSearch()" type="button" class="btn hidden sm:block">
-      <MagnifyingGlassIcon class="h-6 w-6 text-base-content"/>
+    <button @click="doSearch()" type="button" class="btn btn-primary hidden sm:block">
+      <MagnifyingGlassIcon class="h-6 w-6 text-primary-content"/>
     </button>
-    <button @click="navigateToSearch()" type="button" class="btn block sm:hidden">
-      <MagnifyingGlassIcon class="h-6 w-6 text-base-content"/>
+    <button @click="navigateToSearch()" type="button" class="btn btn-primary block sm:hidden">
+      <MagnifyingGlassIcon class="h-6 w-6 text-primary-content"/>
     </button>
   </div>
   <slot/>

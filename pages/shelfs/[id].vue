@@ -28,7 +28,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
       <li>{{ shelf?.name }}</li>
     </ul>
   </div>
-  <p class="m-2 p-4 text-base-content rounded-xl bg-base-200 w-fit text-bold" v-if="shelf && shelf.description">
+  <p class="m-2 p-4 text-info rounded-xl bg-base-200 border border-dashed border-info w-fit text-bold" v-if="shelf && shelf.description">
     {{ shelf?.description }}
   </p>
   <img class="px-2" v-if="shelf && shelf.shelf_image" :src="imageSrc" alt="picture of the shelf"/>

@@ -21,14 +21,14 @@ function doSearch() {
     <label class="floating-label m-2 flex-grow flex flex-row sm:hidden">
       <span>Suche</span>
       <input type="search" placeholder="Search..." v-model="searchText"
-             class="input flex-grow"
+             class="input input-secondary flex-grow"
              @keydown.enter="doSearch()"/>
     </label>
     <button @click="doSearch" class="btn btn-primary m-2 sm:hidden">
       Suchen
     </button>
   </div>
-  <p class="text-slate-400 px-4 text-xl">
+  <p class="text-base-content/30 px-4 text-xl">
     {{ items.length }} Gegenstände in deiner Suche
   </p>
   <ItemList :items="items"/>
