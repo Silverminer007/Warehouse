@@ -6,17 +6,17 @@ import { HomeIcon } from "@heroicons/vue/24/solid";
 
 const id = useRoute().params.id;
 
-const boxData = await useAsyncData('box' + id, () => fetchBox(id, true));
+const boxData = await useAsyncData('box' + id, () => fetchBox(id));
 const box: Box | undefined = !!boxData.error.value ? undefined : boxData.data.value || undefined;
 
 const itemData = await useAsyncData('items:' + id, () => fetchItemsByBox(id));
 const error = !!itemData.error.value;
 const items: Item[] = error ? [] : (itemData.data.value || []);
 
-const shelfId: number | undefined = box?.shelf;
+const shelfId: number | undefined = box?.shelf?.id;
 
 const shelfHref = shelfId ? "/shelfs/" + shelfId : "/";
-const roomHref = "/rooms/" + box?.expandedShelf.room;
+const roomHref = "/rooms/" + box?.shelf?.room?.id;
 
 const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?height=400";
 </script>
@@ -25,8 +25,8 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
   <div class="breadcrumbs text-base-content m-2">
     <ul>
       <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
-      <li><a :href="roomHref">{{ box?.expandedShelf?.expandedRoom?.name }}</a></li>
-      <li><a :href="shelfHref">{{ box?.expandedShelf?.name }}</a></li>
+      <li><a :href="roomHref">{{ box?.shelf?.room?.name }}</a></li>
+      <li><a :href="shelfHref">{{ box?.shelf?.name }}</a></li>
       <li>{{ box?.name }}</li>
     </ul>
   </div>

@@ -7,7 +7,7 @@ import {HomeIcon} from "@heroicons/vue/24/solid";
 const id = useRoute().params.id;
 
 const shelfData = await useAsyncData('shelf' + id, () => {
-  return fetchShelf(id, true);
+  return fetchShelf(id);
 });
 const shelf: Shelf | undefined = !!shelfData.error.value ? undefined : shelfData.data.value || undefined;
 
@@ -17,6 +17,8 @@ const boxes: Box[] = error ? [] : (boxData.data.value || []);
 
 const roomHref = "/rooms/" + shelf?.room;
 
+const roomsOverviewHref = shelf?.room ? "/rooms/" + shelf?.room.id : "/";
+
 const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image + "?height=400";
 </script>
 
@@ -24,7 +26,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
   <div class="breadcrumbs text-base-content m-2">
     <ul>
       <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
-      <li><a :href="roomHref">{{ shelf?.expandedRoom?.name }}</a></li>
+      <li><a :href="roomHref">{{ shelf?.room?.name }}</a></li>
       <li>{{ shelf?.name }}</li>
     </ul>
   </div>
@@ -32,11 +34,11 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
     {{ shelf?.description }}
   </p>
   <img class="px-2" v-if="shelf && shelf.shelf_image" :src="imageSrc" alt="picture of the shelf"/>
-  <BoxList :boxes="boxes" :roomId="roomId"/>
+  <BoxList :boxes="boxes" :roomId="shelf?.room?.id"/>
   <div v-if="boxes.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
       Keine Kisten in diesem Regal. <a :href="roomsOverviewHref"
-                                       class="link">{{ roomId ? "Zurück zum Raum" : "Zurück zur Startseite" }}</a>
+                                       class="link">{{ shelf?.room?.id ? "Zurück zum Raum" : "Zurück zur Startseite" }}</a>
     </p>
   </div>
 </template>

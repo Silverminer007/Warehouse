@@ -1,18 +1,13 @@
-export type RawItem = {
+export type Item = {
     id: number,
     date_created: string,
     date_updated: string,
     name: string,
     item_image: string,
     amount: number,
-    box: number,
+    box: Box | undefined,
     description: string | undefined,
-    category: number | undefined;
-}
-
-export type Item = RawItem & {
-    expandedBox: Box | undefined,
-    expandedCategories: Category[] | undefined,
+    category: Category | undefined;
 }
 
 export type Category = {
@@ -23,34 +18,26 @@ export type Category = {
     description: string,
 }
 
-export type RawBox = {
+export type Box = {
     id: number,
     name: string,
     date_created: string,
     date_updated: string,
     size: string,
-    shelf: number,
+    shelf: Shelf | undefined,
     description: string,
     color: string,
     image: string;
 }
 
-export type Box = RawBox & {
-    expandedShelf: Shelf;
-}
-
-export type RawShelf = {
+export type Shelf = {
     id: number,
     date_created: string,
     date_updated: string,
     name: string,
     description: string,
     shelf_image: string,
-    room: number
-}
-
-export type Shelf = RawShelf & {
-    expandedRoom: Room;
+    room: Room
 }
 
 export type Room = {
@@ -61,10 +48,25 @@ export type Room = {
     room_image: string,
     description: string,
 }
+
+export type PackingList = {
+    id: number,
+    name: string,
+    date_created: string,
+    date_updated: string,
+    description: string,
+    items: PackingListItemRelation[],
+    expandedItems: Item[]
+}
+
 export type DataArray = {
     data: any[]
 }
 
 export type Data = {
     data: any
+}
+
+export type PackingListItemRelation = {
+    item_id: Item
 }

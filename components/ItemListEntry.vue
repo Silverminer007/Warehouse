@@ -15,20 +15,19 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + 
       <div class="flex flex-row items-center gap-2">
         <p class="text-base-content/30">{{ item.amount }}x</p>
         <p class="text-base-content text-xl">{{ item.name }}</p>
-        <p class="badge badge-neutral" v-for="cat in item.expandedCategories"
-           :key="cat.id">{{ cat.name }}</p>
+        <p class="badge badge-neutral" v-if="item.category">{{ item.category?.name }}</p>
       </div>
-      <div v-if="item.expandedBox && item.expandedBox.expandedShelf && item.expandedBox.expandedShelf.expandedRoom">
+      <div v-if="item?.box?.shelf?.room">
         <div class="badge badge-neutral">
-          {{ item.expandedBox?.expandedShelf?.expandedRoom?.name }}
+          {{ item.box?.shelf?.room?.name }}
         </div>
         >
         <div class="badge badge-neutral">
-          {{ item.expandedBox?.expandedShelf?.name }}
+          {{ item.box?.shelf?.name }}
         </div>
         >
         <div class="badge badge-neutral">
-          {{ item.expandedBox?.name }}
+          {{ item.box?.name }}
         </div>
       </div>
     </div>
