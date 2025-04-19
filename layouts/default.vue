@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import {MagnifyingGlassIcon} from "@heroicons/vue/24/solid";
 
-const search = useRoute().query.search || "";
-const searchText = ref(search);
-
-function doSearch() {
-  window.location.href = "/search?search=" + searchText.value;
-}
 function navigateToSearch() {
   window.location.href = "/search";
 }
@@ -18,16 +12,7 @@ function navigateToSearch() {
       <img src="/logo.png" alt="icon" width="40"/>
     </a>
     <h1 class="text-base-content text-bold rounded-b-sm text-4xl flex-grow">KjG Warehouse</h1>
-    <label class="floating-label m-2 sm:block hidden">
-      <span>Suche</span>
-      <input type="search" placeholder="Search..." v-model="searchText"
-             class="input input-secondary"
-             @keydown.enter="doSearch()"/>
-    </label>
-    <button @click="doSearch()" type="button" class="btn btn-primary hidden sm:block">
-      <MagnifyingGlassIcon class="h-6 w-6 text-primary-content"/>
-    </button>
-    <button @click="navigateToSearch()" type="button" class="btn btn-primary block sm:hidden">
+    <button @click="navigateToSearch()" type="button" class="btn btn-primary">
       <MagnifyingGlassIcon class="h-6 w-6 text-primary-content"/>
     </button>
   </div>
