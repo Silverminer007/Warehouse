@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type {Item} from "~/src/types";
 
-const {item} = defineProps<{
-  item: Item
+const {item, location} = defineProps<{
+  item: Item,
+  location: Boolean | boolean
 }>();
 
 const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + "?height=40";
@@ -17,7 +18,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + 
         <p class="text-base-content text-xl">{{ item.name }}</p>
         <p class="badge badge-neutral" v-if="item.category">{{ item.category?.name }}</p>
       </div>
-      <div v-if="item?.box?.shelf?.room">
+      <div v-if="item?.box?.shelf?.room && location">
         <div class="badge badge-neutral">
           {{ item.box?.shelf?.room?.name }}
         </div>

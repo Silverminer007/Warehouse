@@ -28,7 +28,7 @@ export async function fetchBox(boxId: string | string[]): Promise<Box | undefine
 }
 
 export async function fetchPackingList(packingListId: string | string[]): Promise<PackingList> {
-    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Packliste/' + packingListId + '?fields[]=*&fields[]=items.item_id.*');
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Packliste/' + packingListId + '?fields[]=*&fields[]=items.item_id.*.*.*.*');
     if (!rawData.ok) {
         console.error("Failed to fetch packing list " + packingListId);
     }
@@ -36,6 +36,15 @@ export async function fetchPackingList(packingListId: string | string[]): Promis
     const packingList = data.data as PackingList;
     packingList.expandedItems = packingList.items.map(item => item.item_id);
     return packingList;
+}
+
+export async function fetchPackingLists(): Promise<PackingList[] | undefined> {
+    let rawData = await fetch('https://items.kjg-st-barbara.de/items/Packliste?fields[]=name,id');
+    if (!rawData.ok) {
+        console.error("Failed to fetch packing lists");
+        return;
+    }
+    return (await rawData.json() as DataArray).data as PackingList[];
 }
 
 export async function fetchRooms(): Promise<Room[] | undefined> {

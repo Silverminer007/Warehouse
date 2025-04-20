@@ -3,7 +3,7 @@ import {fetchItemsBySearch} from "~/src/dataloader";
 import ItemList from "~/components/ItemList.vue";
 import type {Item} from "~/src/types";
 
-const search = useRoute().query.search || "";
+const search : string = useRoute().query.search || "";
 const searchText: Ref<string> = ref(search);
 
 const items: Ref<Item[]> = ref([]);
@@ -40,7 +40,7 @@ async function doSearch() {
   <p class="text-base-content/80 px-4 text-xl">
     {{ items.length }} Gegenstände in deiner Suche
   </p>
-  <ItemList :items="items"/>
+  <ItemList :items="items" :location="true" :button-text="undefined"/>
 </template>
 
 <style scoped>

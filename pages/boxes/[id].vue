@@ -34,7 +34,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
     {{ box?.description }}
   </p>
   <img class="px-2" v-if="box && box.image" :src="imageSrc" alt="picture of the box"/>
-  <ItemList :items="items"/>
+  <ItemList :items="items" :location="true" :button-text="undefined"/>
   <div v-if="items.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
       Keine Kisten in diesem Regal. <a :href="shelfHref"
