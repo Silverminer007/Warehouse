@@ -12,9 +12,10 @@ const allItemsList: Ref<Item[]> = ref([]);
 
 async function addItem(item: Item) {
   try {
-    if (!packingListItems.includes(item)) {
-      packingListItems.push(item);
+    if (packingListItems.map(item => item.id).includes(item.id)) {
+      return;
     }
+    packingListItems.push(item);
 
     allItemsList.value.splice(allItemsList.value.indexOf(item), 1);
 
@@ -75,7 +76,8 @@ async function doSearch() {
     allItemsList.value = [];
     return;
   }
-  allItemsList.value = await fetchItemsBySearch(searchText.value);
+  const packingListItemsIds = packingListItems.map(item => item.id);
+  allItemsList.value = (await fetchItemsBySearch(searchText.value)).filter(item => !packingListItemsIds.includes(item.id));
 }
 </script>
 
