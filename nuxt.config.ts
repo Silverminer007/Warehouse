@@ -21,6 +21,11 @@ export default defineNuxtConfig({
         manifest: {
             name: 'KjG Warehouse',
             short_name: 'Warehouse',
+            id: "boxes.kjg-st-barbara.de",
+            orientation: 'any',
+            launch_handler: {
+                client_mode: "navigate-existing"
+            },
             description: 'See all items the KjG owns, where they are and write packinglists',
             theme_color: '#ffffff',
             start_url: "/",
@@ -28,7 +33,8 @@ export default defineNuxtConfig({
                 {
                     "src": "/pwa-64x64.png",
                     "sizes": "64x64",
-                    "type": "image/png"
+                    "type": "image/png",
+                    "purpose": "any maskable"
                 },
                 {
                     "src": "/pwa-192x192.png",
