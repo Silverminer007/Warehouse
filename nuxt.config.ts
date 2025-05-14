@@ -34,7 +34,12 @@ export default defineNuxtConfig({
                     "src": "/pwa-64x64.png",
                     "sizes": "64x64",
                     "type": "image/png",
-                    "purpose": "any maskable"
+                },
+                {
+                    "src": "/pwa-64x64.png",
+                    "sizes": "64x64",
+                    "type": "image/png",
+                    "purpose": "any"
                 },
                 {
                     "src": "/pwa-192x192.png",
