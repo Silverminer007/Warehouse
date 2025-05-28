@@ -102,7 +102,7 @@ async function doSearch() {
     {{ packingList?.description }}
   </p>
   <p class="text-base-content/80 px-4 text-xl">
-    {{ packingListItems.length }} Gegenstände auf der Packliste
+    {{ packingListItems.length }} Gegenstände auf der Packliste ({{ new Set(packingListItems.map(item => item.box?.id)).size}} Kisten)
   </p>
   <ItemList :items="packingListItems" @click="removeItem" button-text="x Entfernen" :location="false"/>
   <div class="divider"></div>
