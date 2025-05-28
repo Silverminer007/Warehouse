@@ -12,9 +12,9 @@ function navigateToSearch() {
       <img src="/logo.png" alt="icon" width="40"/>
       <h1 class="text-base-content text-bold rounded-b-sm text-4xl">KjG Warehouse</h1>
     </NuxtLink>
-    <button @click="navigateToSearch()" type="button" class="btn btn-primary">
+    <NuxtLink to="/search" class="btn btn-primary">
       <MagnifyingGlassIcon class="h-6 w-6 text-primary-content"/>
-    </button>
+    </NuxtLink>
   </div>
   <slot/>
 </template>
