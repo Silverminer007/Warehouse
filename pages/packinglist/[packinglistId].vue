@@ -89,10 +89,10 @@ async function doSearch() {
   </p>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><a href="/">
+      <li><NuxtLink to="/">
         <HomeIcon class="h-6 w-6"/>
-      </a></li>
-      <li><a href="/packinglist">Packlisten</a></li>
+      </NuxtLink></li>
+      <li><NuxtLink to="/packinglist">Packlisten</NuxtLink></li>
       <li>{{ packingList?.name }}</li>
     </ul>
   </div>

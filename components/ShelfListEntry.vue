@@ -13,10 +13,10 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
 
 <template>
   <li class="list-row">
-    <a :href="shelfHref">
+    <NuxtLink :to="shelfHref">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the shelf"/>
       <p class="text-base-content text-xl">{{ shelf.name }}</p>
-    </a>
+    </NuxtLink>
   </li>
 </template>
 

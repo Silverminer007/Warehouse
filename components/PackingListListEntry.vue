@@ -9,9 +9,9 @@ const packingListHref = "/packinglist/" + packingList.id;
 
 <template>
   <li class="list-row">
-    <a :href="packingListHref">
+    <NuxtLink :to="packingListHref">
       <p class="text-base-content text-xl">{{ packingList.name }}</p>
-    </a>
+    </NuxtLink>
   </li>
 </template>
 

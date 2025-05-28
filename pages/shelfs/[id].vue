@@ -15,7 +15,7 @@ const boxData = await useAsyncData('boxes:' + id, () => fetchBoxesByShelf(id));
 const error = !!boxData.error.value;
 const boxes: Box[] = error ? [] : (boxData.data.value || []);
 
-const roomHref = "/rooms/" + shelf?.room;
+const roomHref = "/rooms/" + shelf?.room.id;
 
 const roomsOverviewHref = shelf?.room ? "/rooms/" + shelf?.room.id : "/";
 
@@ -25,8 +25,8 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
 <template>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
-      <li><a :href="roomHref">{{ shelf?.room?.name }}</a></li>
+      <li><NuxtLink to="/"><HomeIcon class="h-6 w-6" /></NuxtLink></li>
+      <li><NuxtLink :to="roomHref">{{ shelf?.room?.name }}</NuxtLink></li>
       <li>{{ shelf?.name }}</li>
     </ul>
   </div>
@@ -37,8 +37,8 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + shelf?.shelf_image 
   <BoxList :boxes="boxes" :roomId="shelf?.room?.id"/>
   <div v-if="boxes.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
-      Keine Kisten in diesem Regal. <a :href="roomsOverviewHref"
-                                       class="link">{{ shelf?.room?.id ? "Zurück zum Raum" : "Zurück zur Startseite" }}</a>
+      Keine Kisten in diesem Regal. <NuxtLink :to="roomsOverviewHref"
+                                       class="link">{{ shelf?.room?.id ? "Zurück zum Raum" : "Zurück zur Startseite" }}</NuxtLink>
     </p>
   </div>
 </template>

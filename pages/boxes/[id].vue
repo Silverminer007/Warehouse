@@ -24,9 +24,9 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 <template>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
-      <li><a :href="roomHref">{{ box?.shelf?.room?.name }}</a></li>
-      <li><a :href="shelfHref">{{ box?.shelf?.name }}</a></li>
+      <li><NuxtLink to="/"><HomeIcon class="h-6 w-6" /></NuxtLink></li>
+      <li><NuxtLink :to="roomHref">{{ box?.shelf?.room?.name }}</NuxtLink></li>
+      <li><NuxtLink :to="shelfHref">{{ box?.shelf?.name }}</NuxtLink></li>
       <li>{{ box?.name }}</li>
     </ul>
   </div>
@@ -37,10 +37,10 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
   <ItemList :items="items" :location="true" :button-text="undefined"/>
   <div v-if="items.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
-      Keine Kisten in diesem Regal. <a :href="shelfHref"
+      Keine Kisten in diesem Regal. <NuxtLink :to="shelfHref"
                                        class="link">{{
         shelfId ? "Zurück zum Raum" : "Zurück zur Startseite"
-      }}</a>
+      }}</NuxtLink>
     </p>
   </div>
 </template>

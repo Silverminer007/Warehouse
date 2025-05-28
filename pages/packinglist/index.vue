@@ -10,7 +10,7 @@ const packingLists: PackingList[] = !!packingListData.error.value ? [] : packing
 <template>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+      <li><NuxtLink to="/"><HomeIcon class="h-6 w-6" /></NuxtLink></li>
       <li>Packlisten</li>
     </ul>
   </div>

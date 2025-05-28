@@ -19,7 +19,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
 <template>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><a href="/"><HomeIcon class="h-6 w-6" /></a></li>
+      <li><NuxtLink to="/"><HomeIcon class="h-6 w-6" /></NuxtLink></li>
       <li>{{ room?.name }}</li>
     </ul>
   </div>
@@ -30,7 +30,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
   <ShelfList :shelfs="shelfs"/>
   <div v-if="shelfs.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
-      Keine Regale in diesem Raum. <a href="/" class="link">Zurück zur Startseite</a>
+      Keine Regale in diesem Raum. <NuxtLink to="/" class="link">Zurück zur Startseite</NuxtLink>
     </p>
   </div>
 </template>
