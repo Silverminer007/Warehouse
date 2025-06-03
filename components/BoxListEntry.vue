@@ -13,11 +13,12 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 </script>
 
 <template>
-  <li class="list-row">
-    <NuxtLink :to="boxHref">
+  <li class="list-row flex">
+    <NuxtLink :to="boxHref" class="flex-grow">
       <img class="" v-if="imageProvided" :src="imageSrc" alt="photo of the box"/>
       <p class="text-base-content text-xl">{{ box.name }}</p>
     </NuxtLink>
+    <slot/>
   </li>
 </template>
 

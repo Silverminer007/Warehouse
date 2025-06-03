@@ -91,3 +91,12 @@ export async function fetchItemsBySearch(search: string | string[]): Promise<Ite
     const data = await rawData.json() as DataArray;
     return data.data as Item[];
 }
+
+export async function countItemsByBox(boxId: string | string[] | number): Promise<number> {
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/item?filter[box][_eq]=' + boxId + '&aggregate[count]=*');
+    if(!rawData.ok) {
+        console.error("Failed to count items in box " + boxId);
+        return -1;
+    }
+    return (await rawData.json() as Data).data.count as number;
+}

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {fetchItemsBySearch} from "~/src/dataloader";
-import ItemList from "~/components/ItemList.vue";
 import type {Item} from "~/src/types";
 
 const search : string = useRoute().query.search || "";
@@ -40,7 +39,11 @@ async function doSearch() {
   <p class="text-base-content/80 px-4 text-xl">
     {{ items.length }} Gegenstände in deiner Suche
   </p>
-  <ItemList :items="items" :location="true" :button-text="undefined"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-6">
+    <div v-for="item in items" :key="item.id" class="flex flex-row items-center">
+      <ItemListEntry :item="item" class="flex-grow" :location="true"/>
+    </div>
+  </ul>
 </template>
 
 <style scoped>

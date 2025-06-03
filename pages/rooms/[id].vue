@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {fetchRoom, fetchShelfsByRoom} from "~/src/dataloader";
-import ShelfList from "~/components/ShelfList.vue";
 import type {Room, Shelf} from "~/src/types";
 import {HomeIcon} from "@heroicons/vue/24/solid";
+import ShelfListEntry from "~/components/ShelfListEntry.vue";
 
 const id = useRoute().params.id;
 
@@ -27,7 +27,9 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
     {{ room?.description }}
   </p>
   <img class="px-2" v-if="room && room.room_image" :src="imageSrc" alt="picture of the room"/>
-  <ShelfList :shelfs="shelfs"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <ShelfListEntry v-for="shelf in shelfs" :key="shelf.id" :shelf="shelf"/>
+  </ul>
   <div v-if="shelfs.length == 0">
     <p class="text-base-content m-2 p-4 text-center text-xl">
       Keine Regale in diesem Raum. <NuxtLink to="/" class="link">Zurück zur Startseite</NuxtLink>

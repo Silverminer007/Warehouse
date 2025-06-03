@@ -6,6 +6,9 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     vite: {
         plugins: [tailwindcss()],
+        build: {
+            sourcemap: false
+        }
     },
     css: ["~/assets/app.css"],
     modules: ["@vite-pwa/nuxt"],

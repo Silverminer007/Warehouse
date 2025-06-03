@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {fetchRooms} from '~/src/dataloader'
-import RoomList from "~/components/RoomList.vue";
 import type {Room} from "~/src/types";
 import {HomeIcon, ArrowRightIcon} from "@heroicons/vue/24/solid";
+import RoomListEntry from "~/components/RoomListEntry.vue";
 
 const roomData = await useAsyncData('rooms', () =>
     fetchRooms()
@@ -27,7 +27,9 @@ const rooms: Room[] = error ? [] : (roomData.data.value || []);
   <p class="bg-primary text-2xl text-primary-content rounded-xl p-2">
     Räume
   </p>
-  <RoomList :rooms="rooms"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <RoomListEntry v-for="room in rooms" :key="room.id" :room="room"/>
+  </ul>
 </template>
 
 <style scoped>

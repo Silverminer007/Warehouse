@@ -89,10 +89,14 @@ async function doSearch() {
   </p>
   <div class="breadcrumbs text-base-content m-2">
     <ul>
-      <li><NuxtLink to="/">
-        <HomeIcon class="h-6 w-6"/>
-      </NuxtLink></li>
-      <li><NuxtLink to="/packinglist">Packlisten</NuxtLink></li>
+      <li>
+        <NuxtLink to="/">
+          <HomeIcon class="h-6 w-6"/>
+        </NuxtLink>
+      </li>
+      <li>
+        <NuxtLink to="/packinglist">Packlisten</NuxtLink>
+      </li>
       <li>{{ packingList?.name }}</li>
     </ul>
   </div>
@@ -102,9 +106,16 @@ async function doSearch() {
     {{ packingList?.description }}
   </p>
   <p class="text-base-content/80 px-4 text-xl">
-    {{ packingListItems.length }} Gegenstände auf der Packliste ({{ new Set(packingListItems.map(item => item.box?.id)).size}} Kisten)
+    {{ packingListItems.length }} Gegenstände auf der Packliste
+    ({{ new Set(packingListItems.map(item => item?.box?.id)).size }} Kisten)
   </p>
-  <ItemList :items="packingListItems" @click="removeItem" button-text="x Entfernen" :location="false"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-6">
+    <div v-for="item in packingListItems" :key="item.id" class="flex flex-row items-center">
+      <PackinglistItemListEntry :item="item" class="flex-grow">
+        <button class="btn btn-primary mr-4" @click="removeItem(item)">x Entfernen</button>
+      </PackinglistItemListEntry>
+    </div>
+  </ul>
   <div class="divider"></div>
   <div class="flex flex-row flex-wrap items-center gap-4">
     <p class="text-base-content text-2xl m-2 flex-grow">Gegenstände hinzufügen</p>
@@ -121,7 +132,13 @@ async function doSearch() {
   <p class="text-base-content/80 px-4 text-xl">
     {{ allItemsList.length }} Gegenstände in deiner Suche
   </p>
-  <ItemList :items="allItemsList" @click="addItem" button-text="Hinzufügen" :location="true"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-6">
+    <div v-for="item in allItemsList" :key="item.id" class="flex flex-row items-center">
+      <ItemListEntry :item="item" :location="false" class="flex-grow">
+        <button class="btn btn-primary" @click="addItem(item)">Hinzufügen</button>
+      </ItemListEntry>
+    </div>
+  </ul>
 </template>
 
 <style scoped>

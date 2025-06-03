@@ -17,7 +17,9 @@ const packingLists: PackingList[] = !!packingListData.error.value ? [] : packing
   <p class="bg-primary text-2xl text-primary-content rounded-xl p-2">
     Packlisten
   </p>
-  <PackingListList :packing-lists="packingLists"/>
+  <ul class="list bg-base-200 rounded-box shadow-md m-2">
+    <PackingListListEntry v-for="packingList in packingLists" :key="packingList.id" :packing-list="packingList"/>
+  </ul>
 </template>
 
 <style scoped>
