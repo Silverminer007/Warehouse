@@ -165,11 +165,6 @@ async function undoDelete() {
       <button class="btn" @click="deletedItem = null">x</button>
     </div>
   </div>
-  <div class="flex flex-row justify-center w-full">
-    <p class="btn btn-primary">
-      + Weiteres Item
-    </p>
-  </div>
 </template>
 
 <style scoped>
