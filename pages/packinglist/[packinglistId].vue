@@ -110,7 +110,7 @@ async function doSearch() {
     ({{ new Set(packingListItems.map(item => item?.box?.id)).size }} Kisten)
   </p>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
-    <div v-for="item in packingListItems" :key="item.id" class="flex flex-row items-center">
+    <div v-for="item in packingListItems.filter(i => i)" :key="item.id" class="flex flex-row items-center">
       <PackinglistItemListEntry :item="item" class="flex-grow">
         <button class="btn btn-primary mr-4" @click="removeItem(item)">x Entfernen</button>
       </PackinglistItemListEntry>
@@ -133,7 +133,7 @@ async function doSearch() {
     {{ allItemsList.length }} Gegenstände in deiner Suche
   </p>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
-    <div v-for="item in allItemsList" :key="item.id" class="flex flex-row items-center">
+    <div v-for="item in allItemsList.filter(i => i)" :key="item.id" class="flex flex-row items-center">
       <ItemListEntry :item="item" :location="false" class="flex-grow">
         <button class="btn btn-primary" @click="addItem(item)">Hinzufügen</button>
       </ItemListEntry>
