@@ -21,7 +21,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 
 const newItemAmount = ref(1);
 const newItemName = ref("");
-const deletedItem = ref(null);
+const deletedItem : Ref<Item | null> = ref(null);
 
 function sortItems() {
   items.sort((a, b) => a.name.localeCompare(b.name));
@@ -75,6 +75,9 @@ async function deleteItem(item: Item) {
 }
 
 async function undoDelete() {
+  if(!deletedItem.value) {
+    return;
+  }
   items.push(deletedItem.value);
   const res = await fetch('https://items.kjg-st-barbara.de/items/item/', {
     method: 'POST',
@@ -161,6 +164,11 @@ async function undoDelete() {
       <button class="btn" @click="undoDelete">Rückgängig</button>
       <button class="btn" @click="deletedItem = null">x</button>
     </div>
+  </div>
+  <div class="flex flex-row justify-center w-full">
+    <p class="btn btn-primary">
+      + Weiteres Item
+    </p>
   </div>
 </template>
 
