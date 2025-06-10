@@ -120,7 +120,7 @@ async function undoDelete() {
   <img class="px-2" v-if="box && box.image" :src="imageSrc" alt="picture of the box"/>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
     <div v-for="item in items" :key="item.id" class="flex flex-row items-center">
-      <ItemListEntry :item="item" class="flex-grow" location=true>
+      <ItemListEntry :item="item" class="flex-grow" :location=true>
         <button class="btn" @click="deleteItem(item)">x</button>
       </ItemListEntry>
     </div>

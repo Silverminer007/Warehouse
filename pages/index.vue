@@ -19,9 +19,20 @@ const rooms: Room[] = error ? [] : (roomData.data.value || []);
       </NuxtLink></li>
     </ul>
   </div>
-  <NuxtLink to="/packinglist" class="bg-primary flex flex-row items-center rounded-xl p-2">
-    <p class="text-2xl text-primary-content flex-grow">Packlisten</p>
-    <ArrowRightIcon class="h-6 w-6 text-primary-content"/>
+  <p class="bg-primary text-2xl text-primary-content rounded-xl p-2">
+    Features
+  </p>
+  <NuxtLink to="/packinglist" class="bg-secondary flex flex-row items-center rounded-xl p-2 m-2">
+    <p class="text-2xl text-secondary-content flex-grow">Packlisten</p>
+    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
+  </NuxtLink>
+  <NuxtLink to="/kiosk" class="bg-secondary flex flex-row items-center rounded-xl p-2 m-2">
+    <p class="text-2xl text-secondary-content flex-grow">Kiosk</p>
+    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
+  </NuxtLink>
+  <NuxtLink to="/search" class="bg-secondary flex flex-row items-center rounded-xl p-2 m-2">
+    <p class="text-2xl text-secondary-content flex-grow">Gegenstände suchen</p>
+    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
   </NuxtLink>
   <div class="divider"/>
   <p class="bg-primary text-2xl text-primary-content rounded-xl p-2">

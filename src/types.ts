@@ -5,6 +5,7 @@ export type Item = {
     name: string,
     item_image: string,
     amount: number,
+    price: number,
     box: Box | undefined,
     description: string | undefined,
     category: Category | undefined;
@@ -47,6 +48,13 @@ export type Room = {
     name: string,
     room_image: string,
     description: string,
+}
+
+export type Person = {
+    id: number,
+    firstname: string,
+    lastname: string,
+    balance: number,
 }
 
 export type PackingList = {

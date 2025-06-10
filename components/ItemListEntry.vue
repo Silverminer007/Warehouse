@@ -50,8 +50,7 @@ async function minusOne() {
 </script>
 
 <template>
-  <li class="list-row flex">
-    <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
+  <li class="list-row flex items-center justify-items">
     <div class="flex flex-col gap-1 flex-grow">
       <div class="flex flex-row items-center gap-2">
         <div class="flex flex-row justify-center items-center gap-1">
@@ -59,6 +58,7 @@ async function minusOne() {
           <p class="text-base-content min-w-4">{{ item.amount }}x</p>
           <button type="button" class="btn btn-secondary btn-sm" @click="addOne">+</button>
         </div>
+        <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
         <p class="text-base-content text-xl" onclick="item_detail_modal.showModal()">{{ item.name }}</p>
       </div>
       <dialog id="item_detail_modal" class="modal">

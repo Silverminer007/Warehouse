@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {fetchItemsBySearch} from "~/src/dataloader";
 import type {Item} from "~/src/types";
+import {HomeIcon} from "@heroicons/vue/24/solid";
 
 const search : string = useRoute().query.search || "";
 const searchText: Ref<string> = ref(search);
@@ -24,6 +25,16 @@ async function doSearch() {
 </script>
 
 <template>
+  <div class="breadcrumbs text-base-content m-2">
+    <ul>
+      <li>
+        <NuxtLink to="/">
+          <HomeIcon class="h-6 w-6"/>
+        </NuxtLink>
+      </li>
+      <li>Suche</li>
+    </ul>
+  </div>
   <div class="w-full p-2 flex-col flex sm:flex-row flex-wrap">
     <p class="text-base-content text-2xl m-2 flex-grow hidden sm:block">Gegenstände suchen</p>
     <label class="floating-label m-2 flex flex-row">
