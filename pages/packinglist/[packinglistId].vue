@@ -100,7 +100,10 @@ async function doSearch() {
       <li>{{ packingList?.name }}</li>
     </ul>
   </div>
-  <p class="text-base-content text-2xl m-2 flex-grow">{{ packingList?.name }}</p>
+  <div class="flex-grow flex flex-row m-2">
+    <p class="text-base-content text-2xl m-2 flex-grow">{{ packingList?.name }}</p>
+    <a class="btn btn-primary" :href="'https://items.kjg-st-barbara.de/warehouse/api/v1/packliste/' + id">Export PDF</a>
+  </div>
   <p class="m-2 p-4 text-info rounded-xl bg-base-200 border border-dashed border-info w-fit text-bold"
      v-if="packingList && packingList.description">
     {{ packingList?.description }}
