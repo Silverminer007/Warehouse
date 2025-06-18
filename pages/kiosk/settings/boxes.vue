@@ -14,19 +14,13 @@ import {HomeIcon} from "@heroicons/vue/24/solid";
       <li>
         <NuxtLink to="/kiosk">Kiosk</NuxtLink>
       </li>
-      <li>Einstellungen</li>
+      <li>
+        <NuxtLink to="/kiosk/settings">Einstellungen</NuxtLink>
+      </li>
+      <li>Kisten</li>
     </ul>
   </div>
-  <p class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2">
-    Kiosk - Einstellungen
-  </p>
   <KioskBoxesSection/>
-  <KioskPersonsSection/>
-  <KioskItemsSection/>
-  <ul>
-    <li>Preise pro Gegenstand setzen?</li>
-    <li>Inventar sehen?</li>
-  </ul>
 </template>
 
 <style scoped>

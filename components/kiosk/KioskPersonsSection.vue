@@ -27,7 +27,7 @@ async function update() {
 
 <template>
   <div
-      class="bg-secondary text-2xl text-secondary-content rounded-xl p-2 my-2 flex flex-row items-center justify-center">
+      class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2 flex flex-row items-center justify-center">
     <p class="flex-grow">Personen</p>
     <button class="btn btn-tertiary mx-2" onclick="set_balance_modal.showModal()">
       Kontostand setzen

@@ -28,7 +28,7 @@ async function updateItems() {
 </script>
 
 <template>
-  <p class="bg-secondary text-2xl text-secondary-content rounded-xl p-2">
+  <p class="bg-primary text-2xl text-primary-content rounded-xl p-2">
     Preise & Bilder
   </p>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">

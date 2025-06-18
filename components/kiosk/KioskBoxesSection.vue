@@ -29,7 +29,7 @@ async function updateBoxes() {
 
 <template>
   <div
-      class="bg-secondary text-2xl text-secondary-content rounded-xl p-2 my-2 flex flex-row items-center justify-center">
+      class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2 flex flex-row items-center justify-center">
     <p class="flex-grow">Kiosk Kisten</p>
     <div onclick="add_kiosk_box_modal.showModal()">
       <PlusIcon class="h-8 w-8"/>
