@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {fetchBox, fetchItemsByBox} from "~/src/dataloader";
-import type {Item, Box, Data} from "~/src/types";
-import {HomeIcon} from "@heroicons/vue/24/solid";
+import {fetchBox, fetchBoxes, fetchItemsByBox} from "~/src/dataloader";
+import type {Box, Data, Item} from "~/src/types";
+import {ArrowsRightLeftIcon, CheckCircleIcon, HomeIcon} from "@heroicons/vue/24/solid";
 
 const id = useRoute().params.id;
 
@@ -12,6 +12,9 @@ const itemData = await useAsyncData('items:' + id, () => fetchItemsByBox(id));
 const error = !!itemData.error.value;
 const items: Item[] = error ? [] : (itemData.data.value || []);
 
+const boxesData = await useAsyncData('boxes', () => fetchBoxes());
+const boxes: Box[] = (!!boxesData.error.value ? [] : (boxesData.data.value || [])).filter(b => b.id != box?.id);
+
 const shelfId: number | undefined = box?.shelf?.id;
 
 const shelfHref = shelfId ? "/shelfs/" + shelfId : "/";
@@ -21,7 +24,7 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + box?.image + "?heig
 
 const newItemAmount = ref(1);
 const newItemName = ref("");
-const deletedItem : Ref<Item | null> = ref(null);
+const deletedItem: Ref<Item | null> = ref(null);
 
 function sortItems() {
   items.sort((a, b) => a.name.localeCompare(b.name));
@@ -75,7 +78,7 @@ async function deleteItem(item: Item) {
 }
 
 async function undoDelete() {
-  if(!deletedItem.value) {
+  if (!deletedItem.value) {
     return;
   }
   items.push(deletedItem.value);
@@ -94,6 +97,30 @@ async function undoDelete() {
   deletedItem.value = null;
   sortItems();
 }
+
+const errorMoveItem = ref(false);
+
+async function moveItem(item: Item, moveToBox: Box) {
+  const res = await fetch('https://items.kjg-st-barbara.de/items/item/' + item.id, {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "box": moveToBox.id
+    })
+  });
+  if (res.ok) {
+    item.box = moveToBox;
+    items.splice(items.indexOf(item), 1);
+    move_item.hideModal();
+    errorMoveItem.value = false;
+  } else {
+    errorMoveItem.value = true;
+  }
+}
+
+const searchText = ref("");
 </script>
 
 <template>
@@ -121,6 +148,35 @@ async function undoDelete() {
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
     <div v-for="item in items" :key="item.id" class="flex flex-row items-center">
       <ItemListEntry :item="item" class="flex-grow" :location=true>
+        <button class="btn" onclick="move_item.showModal()">
+          <ArrowsRightLeftIcon class="h-6 w-6 text-primary"/>
+        </button>
+        <dialog id="move_item" class="modal">
+          <div class="modal-box">
+            <p class="text-xl">{{ item.name }} verschieben</p>
+            <label class="floating-label m-2 flex flex-row">
+              <span>Suche</span>
+              <input autofocus type="search" placeholder="Search..." v-model="searchText"
+                     class="input input-secondary"/>
+            </label>
+            <div role="alert" class="alert alert-error" v-if="errorMoveItem">
+              Der Gegenstand konnte nicht verschoben werden
+            </div>
+            <ul class="list">
+              <li class="list-row flex flex-row items-center gap-2" v-for="moveToBox in boxes.filter(s =>
+          s.name.toLowerCase().includes(searchText.toLowerCase()))"
+                  :key="moveToBox.id">
+              <span class="flex-grow text-base-content text-xl">{{ moveToBox.name}}</span>
+                <button class="btn" @click="moveItem(item, moveToBox)">
+                  <CheckCircleIcon class="h-6 w-6 text-primary"/>
+                </button>
+              </li>
+            </ul>
+          </div>
+          <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
         <button class="btn" @click="deleteItem(item)">x</button>
       </ItemListEntry>
     </div>

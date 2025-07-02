@@ -56,6 +56,15 @@ export async function fetchRooms(): Promise<Room[] | undefined> {
     return (await rawData.json() as DataArray).data as Room[];
 }
 
+export async function fetchShelfs(): Promise<Shelf[]> {
+    const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf?sort=name&fields[]=room.*&fields[]=*.*');
+    if (!rawData.ok) {
+        console.error("Failed to fetch shelfs");
+    }
+    const data = await rawData.json() as DataArray;
+    return data.data as Shelf[];
+}
+
 export async function fetchShelfsByRoom(roomId: string | string[]): Promise<Shelf[]> {
     const rawData = await fetch('https://items.kjg-st-barbara.de/items/Shelf?sort=name&fields[]=room.*&fields[]=*.*&filter[room]=' + roomId);
     if (!rawData.ok) {
@@ -63,6 +72,15 @@ export async function fetchShelfsByRoom(roomId: string | string[]): Promise<Shel
     }
     const data = await rawData.json() as DataArray;
     return data.data as Shelf[];
+}
+
+export async function fetchBoxes(): Promise<Box[] | undefined> {
+    let rawData = await fetch('https://items.kjg-st-barbara.de/items/Box?sort=name&fields[]=*&fields[]=shelf.*&fields[]=shelf.room.*');
+    if (!rawData.ok) {
+        console.error("Failed to fetch boxes");
+        return;
+    }
+    return (await rawData.json() as DataArray).data as Box[];
 }
 
 export async function fetchBoxesByShelf(shelfId: string | string[]): Promise<Box[] | undefined> {

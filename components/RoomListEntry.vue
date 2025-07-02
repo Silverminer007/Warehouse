@@ -10,11 +10,12 @@ const imageSrc = "https://items.kjg-st-barbara.de/assets/" + room?.room_image + 
 </script>
 
 <template>
-  <li class="list-row">
-    <NuxtLink :to="roomHref">
+  <li class="list-row flex flex-row items-center gap-2">
+    <NuxtLink :to="roomHref" class="flex-grow">
       <img v-if="room && room.room_image" :src="imageSrc" alt="photo of the room"/>
       <p class="text-base-content text-xl">{{ room.name }}</p>
     </NuxtLink>
+    <slot/>
   </li>
 </template>
 
