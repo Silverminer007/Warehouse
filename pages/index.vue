@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {fetchRooms} from '~/src/dataloader'
-import type {Room} from "~/src/types";
+import type {Data, Room, Shelf} from "~/src/types";
 import {HomeIcon, ArrowRightIcon} from "@heroicons/vue/24/solid";
 import RoomListEntry from "~/components/RoomListEntry.vue";
 
@@ -9,6 +9,34 @@ const roomData = await useAsyncData('rooms', () =>
 );
 const error = !!roomData.error.value;
 const rooms: Room[] = error ? [] : (roomData.data.value || []);
+
+const newRoomName = ref("");
+
+function sortRooms() {
+  rooms.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function addRoom() {
+  if (!newRoomName.value) {
+    return;
+  }
+  const res = await fetch('https://items.kjg-st-barbara.de/items/Room', {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "name": newRoomName.value
+    })
+  });
+  if (res.ok) {
+    const json = await res.json();
+    const room = (json as Data).data as Room;
+    rooms.push(room);
+  }
+  newRoomName.value = "";
+  sortRooms();
+}
 </script>
 
 <template>
@@ -41,6 +69,26 @@ const rooms: Room[] = error ? [] : (roomData.data.value || []);
   <ul class="list bg-base-200 rounded-box shadow-md m-2">
     <RoomListEntry v-for="room in rooms" :key="room.id" :room="room"/>
   </ul>
+  <div class="flex flex-row items-center justify-center p-2">
+    <button class="btn btn-primary" type="button" onclick="add_room.showModal()">
+      Raum hinzufügen +
+    </button>
+  </div>
+  <dialog id="add_room" class="modal">
+    <div class="modal-box">
+      <p class="text-xl">{{ 'Raum hinzufügen' }}</p>
+      <div class="flex flex-row items-center justify-center p-2 gap-2">
+        <input type="text" class="input input-primary validator"
+               minlength="1" required placeholder="Name" v-model="newRoomName">
+        <button class="btn btn-primary" type="button" @click="addRoom">
+          + Add
+        </button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
 </template>
 
 <style scoped>

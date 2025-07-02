@@ -38,7 +38,7 @@ export type Shelf = {
     name: string,
     description: string,
     shelf_image: string,
-    room: Room
+    room: Room | undefined
 }
 
 export type Room = {
