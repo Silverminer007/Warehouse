@@ -71,6 +71,8 @@ async function checkout() {
   }
   shoppingCart.value.clear();
 }
+
+const searchText = ref("");
 </script>
 
 <template>
@@ -101,8 +103,18 @@ async function checkout() {
       Kaufen
     </button>
   </div>
+  <div class="w-full p-2 flex-col flex sm:flex-row flex-wrap">
+    <p class="text-base-content text-2xl m-2 flex-grow hidden sm:block">Suche</p>
+    <label class="floating-label m-2 flex flex-row">
+      <span>Suche</span>
+      <input type="search" placeholder="Search..." v-model="searchText"
+             class="input input-secondary"/>
+    </label>
+  </div>
   <div class="flex flex-row flex-wrap">
-    <div v-for="item in items.filter(i => i)" :key="item.id" class="w-screen sm:w-56">
+    <div v-for="item in items.filter(i =>
+    i && i.name.toLowerCase().includes(searchText.toLowerCase()))"
+         :key="item.id" class="w-screen sm:w-56">
       <div class="indicator m-4 w-11/12" @click="addItemToCart(item)">
       <span v-if="shoppingCart.has(item)"
             class="indicator-item badge badge-secondary">{{ shoppingCart.get(item) || "" }}</span>
