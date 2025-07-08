@@ -4,6 +4,8 @@ import {ArrowUpTrayIcon} from "@heroicons/vue/24/outline"
 import type {Item} from "~/src/types"
 import {patchItemImage, updateItemPrice, uploadImageToDirectus} from '~/api/kiosk/directus'
 
+const showUploadDialog = ref<boolean>(false);
+
 const itemData = await useAsyncData('kiosk-items', getKioskItemsWithAndWithoutPrice)
 const error = !!itemData.error.value
 const items: Ref<Item[]> = ref(error ? [] : (itemData.data.value || []))
@@ -41,8 +43,8 @@ async function handleImageUpload(e: Event, item: Item) {
     Preise & Bilder
   </p>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
-    <li v-for="item in items" :key="item.id" class="list-row">
-      <button type="button" class="btn" onclick="upload_item_image_modal.showModal()">
+    <li v-for="item in items" :key="item.id" class="sm:list-row not-sm:list-item">
+      <button type="button" class="btn" @click="showUploadDialog = true">
         <ArrowUpTrayIcon v-if="!(item && item.item_image)" class="w-6 h-6 text-secondary-content"/>
         <img v-if="item && item.item_image" class="w-6 h-6"
              :src="'https://items.kjg-st-barbara.de/assets/' + item?.item_image + '?height=40'"
@@ -56,7 +58,7 @@ async function handleImageUpload(e: Event, item: Item) {
       </label>
 
       <!-- Upload Modal -->
-      <dialog id="upload_item_image_modal" class="modal">
+      <div class="modal modal-open" v-if="showUploadDialog">
         <div class="modal-box">
           <p class="text-xl font-bold">{{ item?.name }}</p>
 
@@ -68,14 +70,16 @@ async function handleImageUpload(e: Event, item: Item) {
 
           <input
               type="file"
-              accept="image/png, image/jpeg"
+              accept="image/*"
               class="file-input w-full mt-4"
+              capture="environment"
               @change="handleImageUpload($event, item)"/>
+          <div class="modal-action">
+            <button class="btn" @click="showUploadDialog = false">Schließen</button>
+          </div>
         </div>
-        <form method="dialog" class="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+        <div class="modal-backdrop" @click="showUploadDialog = false"></div>
+      </div>
     </li>
   </ul>
 </template>

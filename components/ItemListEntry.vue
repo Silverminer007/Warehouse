@@ -6,6 +6,8 @@ const {item, location} = defineProps<{
   location: Boolean | boolean
 }>();
 
+const itemDetailsDialog = ref<boolean>(false);
+
 const imageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + "?height=40";
 const largeImageSrc = "https://items.kjg-st-barbara.de/assets/" + item?.item_image + "?height=400";
 
@@ -20,7 +22,7 @@ async function addOne() {
       "amount": item.amount
     })
   });
-  if(!res.ok) {
+  if (!res.ok) {
     item.amount--;
     console.log(res);
     window.alert("Netzwerkfehler. Die Menge konnte nicht geändert werden")
@@ -41,7 +43,7 @@ async function minusOne() {
       "amount": item.amount
     })
   });
-  if(!res.ok) {
+  if (!res.ok) {
     item.amount++;
     console.log(res);
     window.alert("Netzwerkfehler. Die Menge konnte nicht geändert werden")
@@ -54,14 +56,16 @@ async function minusOne() {
     <div class="flex flex-col gap-1 flex-grow">
       <div class="flex flex-row items-center gap-2">
         <div class="flex flex-row justify-center items-center gap-1">
-          <button type="button" :class="'btn btn-secondary btn-sm ' + (item.amount <= 1 ? 'btn-disabled' : '')" @click="minusOne">-</button>
+          <button type="button" :class="'btn btn-secondary btn-sm ' + (item.amount <= 1 ? 'btn-disabled' : '')"
+                  @click="minusOne">-
+          </button>
           <p class="text-base-content min-w-4">{{ item.amount }}x</p>
           <button type="button" class="btn btn-secondary btn-sm" @click="addOne">+</button>
         </div>
         <img class="" v-if="item && item.item_image" :src="imageSrc" alt="photo of the item"/>
-        <p class="text-base-content text-xl" onclick="item_detail_modal.showModal()">{{ item.name }}</p>
+        <p class="text-base-content text-xl" @click="itemDetailsDialog = true">{{ item.name }}</p>
       </div>
-      <dialog id="item_detail_modal" class="modal">
+      <div v-if="itemDetailsDialog" class="modal modal-open">
         <div class="modal-box">
           <p class="text-xl font-bold py-2">Hier findest du {{ item.name }}:</p>
           <div v-if="item?.box?.shelf?.room && location">
@@ -78,17 +82,13 @@ async function minusOne() {
             </div>
           </div>
           <img class="" v-if="item && item.item_image" :src="largeImageSrc" alt="photo of the item"/>
-          <div class="modal-action">
-            <form method="dialog">
-              <!-- if there is a button in form, it will close the modal -->
-              <button class="btn">Close</button>
-            </form>
-          </div>
         </div>
-        <form method="dialog" class="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+        <div class="modal-action">
+          <button class="btn" @click="itemDetailsDialog = false">Schließen</button>
+        </div>
+      </div>
+
+      <div class="modal-backdrop" @click="itemDetailsDialog = false"></div>
     </div>
     <slot/>
   </li>
