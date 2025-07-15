@@ -36,6 +36,8 @@ async function handleImageUpload(e: Event, item: Item) {
     alert('Fehler beim Upload oder Speichern')
   }
 }
+
+const currentItem = ref<Item | null>(null);
 </script>
 
 <template>
@@ -44,7 +46,7 @@ async function handleImageUpload(e: Event, item: Item) {
   </p>
   <ul class="list bg-base-200 rounded-box shadow-md m-6">
     <li v-for="item in items" :key="item.id" class="sm:list-row not-sm:list-item">
-      <button type="button" class="btn" @click="showUploadDialog = true">
+      <button type="button" class="btn" @click="showUploadDialog = true; currentItem=item">
         <ArrowUpTrayIcon v-if="!(item && item.item_image)" class="w-6 h-6 text-secondary-content"/>
         <img v-if="item && item.item_image" class="w-6 h-6"
              :src="'https://items.kjg-st-barbara.de/assets/' + item?.item_image + '?height=40'"
@@ -60,10 +62,10 @@ async function handleImageUpload(e: Event, item: Item) {
       <!-- Upload Modal -->
       <div class="modal modal-open" v-if="showUploadDialog">
         <div class="modal-box">
-          <p class="text-xl font-bold">{{ item?.name }}</p>
+          <p class="text-xl font-bold">{{ currentItem?.name }}</p>
 
-          <img v-if="item?.item_image"
-               :src="`https://items.kjg-st-barbara.de/assets/${item.item_image}?height=100`"
+          <img v-if="currentItem?.item_image"
+               :src="`https://items.kjg-st-barbara.de/assets/${currentItem.item_image}?height=100`"
                class="my-2" alt=""/>
 
           <div v-else class="alert alert-warning">Kein Bild vorhanden</div>
