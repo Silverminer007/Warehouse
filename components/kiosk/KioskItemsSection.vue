@@ -75,7 +75,7 @@ const currentItem = ref<Item | null>(null);
               accept="image/*"
               class="file-input w-full mt-4"
               capture="environment"
-              @change="handleImageUpload($event, item)"/>
+              @change="handleImageUpload($event, currentItem)"/>
           <div class="modal-action">
             <button class="btn" @click="showUploadDialog = false">Schließen</button>
           </div>
