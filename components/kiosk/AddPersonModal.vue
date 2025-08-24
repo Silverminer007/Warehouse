@@ -1,59 +1,101 @@
-<script setup lang="ts">
-const firstname = ref("");
-const lastname = ref("");
-const balance = ref(20.0);
+<script lang="ts" setup>
+import { defineEmits, defineProps } from 'vue'
 
-const emit = defineEmits(['update']);
+defineProps<{
+  visible: boolean
+}>()
 
-async function addPerson() {
-  const response = await fetch('https://items.kjg-st-barbara.de/items/person', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      firstname: firstname.value,
-      lastname: lastname.value,
-      balance: balance.value
-    })
-  });
-  if (response.ok) {
-    firstname.value = "";
-    lastname.value = "";
-    add_person_modal.close();
-    emit('update');
+const firstname = ref<string>("")
+const lastname = ref<string>("")
+const balance = ref<number>(20)
+
+const errors = ref<{ firstname?: string; lastname?: string; balance?: string }>({})
+
+const emit = defineEmits<{
+  (e: 'update:visible', value: boolean): void
+  (e: 'add', payload: {
+    firstname: string,
+    lastname: string,
+    balance: number
+  }): void
+}>()
+
+const closeModal = () => {
+  errors.value = {}
+  emit('update:visible', false)
+}
+
+const validate = () => {
+  const newErrors: typeof errors.value = {}
+
+  if (!firstname.value.trim()) {
+    newErrors.firstname = "Vorname darf nicht leer sein."
   }
+  if (!lastname.value.trim()) {
+    newErrors.lastname = "Nachname darf nicht leer sein."
+  }
+  if (balance.value == null || isNaN(balance.value) || balance.value < 0) {
+    newErrors.balance = "Kontostand muss größer oder gleich 0 sein."
+  }
+
+  errors.value = newErrors
+  return Object.keys(newErrors).length === 0
+}
+
+const handleAdd = async () => {
+  if (!validate()) return
+
+  emit('add', {
+    firstname: firstname.value,
+    lastname: lastname.value,
+    balance: balance.value,
+  })
+
+  firstname.value = ''
+  lastname.value = ''
+  balance.value = 20
+  closeModal()
 }
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <p class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2">
-      Person(en) hinzufügen
-    </p>
-    <div class="flex flex-row">
-      <label class="floating-label m-2 flex flex-row">
-        <span>Vorname</span>
-        <input type="text" placeholder="Vorname" v-model="firstname"
-               class="input input-secondary"/>
-      </label>
-      <label class="floating-label m-2 flex flex-row">
-        <span>Nachname</span>
-        <input type="text" placeholder="Nachname" v-model="lastname"
-               class="input input-secondary"/>
-      </label>
-      <label class="floating-label m-2 flex flex-row">
-        <span>Kontostand</span>
-        <input type="text" placeholder="Kontostand" v-model="balance"
-               class="input input-secondary"/>
-      </label>
-      <button @click="addPerson" class="btn btn-primary m-2">
-        Add
-      </button>
+  <dialog v-if="visible" class="modal" open>
+    <div class="modal-box">
+      <h3 class="font-bold text-lg mb-4">Neue Person hinzufügen</h3>
+
+      <div class="space-y-4">
+        <!-- Vorname -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Vorname</span>
+          </label>
+          <input v-model="firstname" class="input input-bordered w-full" type="text"/>
+          <p v-if="errors.firstname" class="text-error text-sm mt-1">{{ errors.firstname }}</p>
+        </div>
+
+        <!-- Nachname -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Nachname</span>
+          </label>
+          <input v-model="lastname" class="input input-bordered w-full" type="text"/>
+          <p v-if="errors.lastname" class="text-error text-sm mt-1">{{ errors.lastname }}</p>
+        </div>
+
+        <!-- Kontostand -->
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Kontostand</span>
+          </label>
+          <input v-model.number="balance" class="input input-bordered w-full" type="number"/>
+          <p v-if="errors.balance" class="text-error text-sm mt-1">{{ errors.balance }}</p>
+        </div>
+      </div>
+
+      <div class="modal-action">
+        <button class="btn btn-primary" @click="handleAdd">Hinzufügen</button>
+        <button class="btn btn-secondary" @click="closeModal">Abbrechen</button>
+      </div>
     </div>
-  </div>
+  </dialog>
 </template>
-
-<style scoped>
-
-</style>

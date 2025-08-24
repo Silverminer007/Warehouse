@@ -1,57 +1,35 @@
-<script setup lang="ts">
-import BoxListEntry from "~/components/BoxListEntry.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
-import {fetchBoxesBySearchAndNotKioskBox} from "~/src/dataloader";
-
-const searchText: Ref<string> = ref("");
-const boxes: Ref<Box[]> = ref([]);
-
-async function doSearch() {
-  boxes.value = await fetchBoxesBySearchAndNotKioskBox(searchText.value);
-}
-
-async function addBox(box: Box) {
-  const response = await fetch('https://items.kjg-st-barbara.de/items/Box/' + box.id, {
-    method: 'PATCH',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      kiosk: true
-    }),
-  });
-  if (response.ok) {
-    boxes.value.splice(boxes.value.indexOf(box), 1);
-  }
-}
-</script>
-
 <template>
-  <div class="flex flex-col">
-    <p class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2">
-      Kiosk Kisten hinzufügen
-    </p>
-    <div class="flex flex-row">
-      <label class="floating-label m-2 flex flex-row flex-grow">
-        <span>Suche</span>
-        <input type="search" placeholder="Search..." v-model="searchText"
-               class="input input-secondary"
-               @keydown.enter="doSearch()" @input="doSearch"/>
-      </label>
-      <button @click="doSearch" class="btn btn-primary m-2">
-        Suchen
-      </button>
-    </div>
-    <ul class="list bg-base-200 rounded-box shadow-md m-2">
-      <BoxListEntry v-for="box in boxes" :key="box.id" :box="box">
-        <button type="button" @click="addBox(box)">
-          <PlusIcon class="w-6 h-6"/>
-        </button>
-      </BoxListEntry>
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-bold">Kiosk Kisten suchen</h2>
+
+    <input
+        v-model="searchTerm"
+        class="input input-bordered w-full"
+        placeholder="Box suchen..."
+        type="text"
+    />
+
+    <ul class="list bg-base-200 rounded-box p-2">
+      <li
+          v-for="box in filteredBoxes"
+          :key="box.id"
+          class="flex justify-between items-center p-2 hover:bg-gray-100 cursor-pointer"
+          @click="addBoxToKiosk(box)"
+      >
+        {{ box.name }}
+      </li>
     </ul>
   </div>
 </template>
 
-<style scoped>
+<script lang="ts" setup>
+import {useKioskBoxes} from '~/composables/kiosk/useKioskBoxes'
 
+const {searchTerm, filteredBoxes, addBoxToKiosk} = await useKioskBoxes()
+</script>
+
+<style scoped>
+.list li:hover {
+  background-color: #f3f4f6;
+}
 </style>

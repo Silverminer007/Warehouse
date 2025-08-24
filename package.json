@@ -11,17 +11,24 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
-    "@tailwindcss/postcss": "^4.1.4",
-    "@tailwindcss/vite": "^4.1.4",
-    "@vite-pwa/nuxt": "^1.0.0",
-    "daisyui": "^5.0.23",
-    "nuxt": "^3.16.2",
+    "@pinia/nuxt": "^0.11.2",
+    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.12",
+    "@vite-pwa/nuxt": "^1.0.4",
+    "daisyui": "^5.0.50",
+    "nuxt": "^3.18.1",
+    "pdf-lib": "^1.17.1",
+    "pinia": "^3.0.3",
+    "pulltorefreshjs": "^0.1.22",
+    "qrcode": "^1.5.4",
     "tailwindcss": "^4.1.4",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@types/pulltorefreshjs": "^0.1.7",
+    "@types/qrcode": "^1.5.5",
     "@vite-pwa/assets-generator": "^1.0.0",
-    "vite-plugin-pwa": "^1.0.0"
+    "vite-plugin-pwa": "^1.0.2"
   }
 }

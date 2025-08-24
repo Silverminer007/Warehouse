@@ -1,44 +1,64 @@
-<script setup lang="ts">
-const newBalance = ref(20.0);
+<script lang="ts" setup>
+import {defineEmits, ref} from 'vue'
+import {usePersons} from '~/composables/kiosk/usePersons'
 
-const emit = defineEmits('update');
+const emit = defineEmits<{
+  (e: 'update:visible', value: boolean): void
+  (e: 'update'): void
+}>()
 
-async function setBalance() {
-  await fetch('https://items.kjg-st-barbara.de/items/person', {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: {},
-      data: {
-        balance: newBalance.value
-      }
+const visible = ref(false)
+const selectedPersonId = ref<string | null>(null)
+const newBalance = ref<number>(0)
+
+const {persons, loadPersons} = usePersons()
+
+const closeModal = () => {
+  emit('update:visible', false)
+}
+
+const setBalance = async () => {
+  if (!selectedPersonId.value) return
+  try {
+    const config = useRuntimeConfig()
+    const DIRECTUS_URL = config.public.directusUrl
+
+    const res = await fetch(`${DIRECTUS_URL}/items/person/${selectedPersonId.value}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({balance: newBalance.value}),
     })
-  });
-  set_balance_modal.close();
-  emit('update');
+    if (!res.ok) throw new Error('Fehler beim Aktualisieren')
+
+    await loadPersons()
+    emit('update')
+    closeModal()
+  } catch (err) {
+    console.error(err)
+  }
 }
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <p class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2">
-      Kontostände zurücksetzen
-    </p>
-    <div class="flex flex-row">
-      <label class="floating-label m-2 flex flex-row flex-grow">
-        <span>Kontostände setzen auf</span>
-        <input type="text" placeholder="Kontostände setzen auf" v-model="newBalance"
-               class="input input-secondary"/>
-      </label>
-      <button @click="setBalance" class="btn btn-primary m-2">
-        Setzen
-      </button>
+  <dialog v-if="visible" class="modal" open>
+    <div class="modal-box">
+      <h3 class="font-bold text-lg mb-4">Kontostand setzen</h3>
+      <div class="form-control">
+        <label class="label">Person</label>
+        <select v-model="selectedPersonId" class="select select-bordered">
+          <option v-for="p in persons" :key="p.id" :value="p.id">
+            {{ p.firstname }} {{ p.lastname }}
+          </option>
+        </select>
+      </div>
+      <div class="form-control">
+        <label class="label">Neuer Kontostand</label>
+        <input v-model.number="newBalance" class="input input-bordered" type="number"/>
+      </div>
+      <div class="modal-action">
+        <button class="btn btn-primary" @click="setBalance">Setzen</button>
+        <button class="btn btn-secondary" @click="closeModal">Abbrechen</button>
+      </div>
     </div>
-  </div>
+  </dialog>
 </template>
-
-<style scoped>
-
-</style>

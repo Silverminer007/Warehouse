@@ -1,6 +1,6 @@
 <script setup lang="ts">
-
 import {HomeIcon} from "@heroicons/vue/24/solid";
+import ItemPriceManager from "~/components/kiosk/ItemPriceManager.vue";
 </script>
 
 <template>
@@ -20,9 +20,7 @@ import {HomeIcon} from "@heroicons/vue/24/solid";
       <li>Gegenstände</li>
     </ul>
   </div>
-  <KioskItemsSection/>
+
+  <!-- Ausgelagerte Komponente -->
+  <ItemPriceManager/>
 </template>
-
-<style scoped>
-
-</style>

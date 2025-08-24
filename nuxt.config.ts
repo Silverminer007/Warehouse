@@ -3,6 +3,12 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
     compatibilityDate: '2024-11-01',
+    ssr: false,
+    runtimeConfig: {
+        public: {
+            directusUrl: process.env.DIRECTUS_URL || 'https://items.kjg-st-barbara.de'
+        }
+    },
     devtools: {enabled: true},
     vite: {
         plugins: [tailwindcss()],
@@ -10,8 +16,8 @@ export default defineNuxtConfig({
             sourcemap: false
         }
     },
-    css: ["~/assets/app.css"],
-    modules: ["@vite-pwa/nuxt"],
+    css: ["~/assets/css/main.css"],
+    modules: ["@vite-pwa/nuxt", "@pinia/nuxt"],
     pwa: {
         client: {
             installPrompt: true

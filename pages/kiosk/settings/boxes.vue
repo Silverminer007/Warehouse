@@ -1,6 +1,6 @@
 <script setup lang="ts">
-
-import {HomeIcon} from "@heroicons/vue/24/solid";
+import { HomeIcon } from "@heroicons/vue/24/solid";
+import KioskBoxList from "~/components/kiosk/KioskBoxList.vue";
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import {HomeIcon} from "@heroicons/vue/24/solid";
     <ul>
       <li>
         <NuxtLink to="/">
-          <HomeIcon class="h-6 w-6"/>
+          <HomeIcon class="h-6 w-6" />
         </NuxtLink>
       </li>
       <li>
@@ -20,9 +20,7 @@ import {HomeIcon} from "@heroicons/vue/24/solid";
       <li>Kisten</li>
     </ul>
   </div>
-  <KioskBoxesSection/>
+
+  <!-- Inhalt ausgelagert in eigene Section -->
+  <KioskBoxList />
 </template>
-
-<style scoped>
-
-</style>

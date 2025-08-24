@@ -1,6 +1,6 @@
 <script setup lang="ts">
-
-import {ArrowRightIcon, HomeIcon} from "@heroicons/vue/24/solid";
+import { HomeIcon } from "@heroicons/vue/24/solid";
+import SettingsCard from "~/components/kiosk/SettingsCard.vue";
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import {ArrowRightIcon, HomeIcon} from "@heroicons/vue/24/solid";
     <ul>
       <li>
         <NuxtLink to="/">
-          <HomeIcon class="h-6 w-6"/>
+          <HomeIcon class="h-6 w-6" />
         </NuxtLink>
       </li>
       <li>
@@ -17,27 +17,13 @@ import {ArrowRightIcon, HomeIcon} from "@heroicons/vue/24/solid";
       <li>Einstellungen</li>
     </ul>
   </div>
+
   <p class="bg-primary text-2xl text-primary-content rounded-xl p-2 my-2">
     Kiosk - Einstellungen
   </p>
-  <NuxtLink to="/kiosk/settings/boxes" class="bg-secondary flex flex-row items-center rounded-xl p-2 my-2">
-    <p class="text-2xl text-secondary-content flex-grow">Kisten</p>
-    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
-  </NuxtLink>
-  <NuxtLink to="/kiosk/settings/items" class="bg-secondary flex flex-row items-center rounded-xl p-2 my-2">
-    <p class="text-2xl text-secondary-content flex-grow">Gegenstände + Preise</p>
-    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
-  </NuxtLink>
-  <NuxtLink to="/kiosk/settings/people" class="bg-secondary flex flex-row items-center rounded-xl p-2 my-2">
-    <p class="text-2xl text-secondary-content flex-grow">Personen</p>
-    <ArrowRightIcon class="h-6 w-6 text-secondary-content"/>
-  </NuxtLink>
-  <ul>
-    <li>Preise pro Gegenstand setzen?</li>
-    <li>Inventar sehen?</li>
-  </ul>
+
+  <!-- Karten für die verschiedenen Einstellungsbereiche -->
+  <SettingsCard to="/kiosk/settings/boxes" label="Kisten" />
+  <SettingsCard to="/kiosk/settings/items" label="Gegenstände + Preise" />
+  <SettingsCard to="/kiosk/settings/persons" label="Personen" />
 </template>
-
-<style scoped>
-
-</style>
